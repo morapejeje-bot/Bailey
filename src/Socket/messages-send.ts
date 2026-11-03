@@ -1,5 +1,6 @@
 import NodeCache from '@cacheable/node-cache'
 import { Boom } from '@hapi/boom'
+import crypto from 'crypto' // <-- TAMBAHAN UNTUK A2UI
 import { proto } from '../../WAProto/index.js'
 import { DEFAULT_CACHE_TTLS, WA_DEFAULT_EPHEMERAL } from '../Defaults'
 import type {
@@ -649,6 +650,29 @@ export const makeMessagesSocket = (config: SocketConfig) => {
 		const binaryNodeContent: BinaryNode[] = []
 		const devices: DeviceWithJid[] = []
 		let reportingMessage: proto.IMessage | undefined
+
+		// ==========================================
+		// CANGKOKAN A2UI - LANGKAH 1 (Elaina -> Baileys)
+		// ==========================================
+		if ((message.interactiveMessage as any)?.bloksWidget) {
+			const widget = (message.interactiveMessage as any).bloksWidget
+			if (widget.uuid && widget.data) {
+				message.messageContextInfo = message.messageContextInfo || {}
+				message.messageContextInfo.botMetadata = message.messageContextInfo.botMetadata || {}
+				message.messageContextInfo.botMetadata.botRenderingConfigMetadata = {
+					bloksVersioningId: '97d95096f6bd540e69eea64a4c1b8a91a9fbb88483dd16f1427c6a9ae56889af',
+					pixelDensity: 1.7000000476837158
+				}
+				;(message.messageContextInfo as any).bizBotType = 1 // BIZ_1P
+
+				if (!message.messageContextInfo.messageSecret) {
+					message.messageContextInfo.messageSecret = crypto.randomBytes(32)
+				}
+			}
+		}
+		// ==========================================
+		// AKHIR CANGKOKAN A2UI
+		// ==========================================
 
 		const meMsg: proto.IMessage = {
 			deviceSentMessage: {
