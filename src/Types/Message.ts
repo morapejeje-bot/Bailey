@@ -281,6 +281,13 @@ export type AnyRegularMessageContent = (
 			body?: string
 			footer?: string
 	  }
+	| ({
+			interactiveButtons: proto.Message.InteractiveMessage.NativeFlowMessage.INativeFlowButton[]
+			text?: string
+			footer?: string
+	  } & Mentionable &
+			Contextable &
+			Editable)
 	| SharePhoneNumber
 	| RequestPhoneNumber
 ) &
