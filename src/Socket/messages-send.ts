@@ -36,6 +36,7 @@ import {
 	parseAndInjectE2ESessions,
 	unixTimestampSeconds
 } from '../Utils'
+import { injectInteractiveNodes } from '../Utils/interactive'
 import { getUrlInfo } from '../Utils/link-preview'
 import { makeKeyedMutex, makeMutex } from '../Utils/make-mutex'
 import { getMessageReportingToken, shouldIncludeReportingToken } from '../Utils/reporting-utils'
@@ -659,7 +660,7 @@ export const makeMessagesSocket = (config: SocketConfig) => {
 			if (widget.uuid && widget.data) {
 				message.messageContextInfo = message.messageContextInfo || {}
 				message.messageContextInfo.botMetadata = message.messageContextInfo.botMetadata || {}
-				message.messageContextInfo.botMetadata.botRenderingConfigMetadata = {
+				;(message.messageContextInfo.botMetadata as any).botRenderingConfigMetadata = {
 					bloksVersioningId: '97d95096f6bd540e69eea64a4c1b8a91a9fbb88483dd16f1427c6a9ae56889af',
 					pixelDensity: 1.7000000476837158
 				}
@@ -673,6 +674,8 @@ export const makeMessagesSocket = (config: SocketConfig) => {
 		// ==========================================
 		// AKHIR CANGKOKAN A2UI
 		// ==========================================
+
+		additionalNodes = injectInteractiveNodes(message, additionalNodes, !isGroup && !isStatus && !isNewsletter)
 
 		const meMsg: proto.IMessage = {
 			deviceSentMessage: {

@@ -283,6 +283,14 @@ export type AnyRegularMessageContent = (
 	  }
 	| ({
 			interactiveButtons: proto.Message.InteractiveMessage.NativeFlowMessage.INativeFlowButton[]
+			title?: string
+			subtitle?: string
+			/** header media (floating button dengan foto/video/dokumen) */
+			image?: WAMediaUpload
+			video?: WAMediaUpload
+			document?: WAMediaUpload
+			mimetype?: string
+			fileName?: string
 			text?: string
 			footer?: string
 	  } & Mentionable &

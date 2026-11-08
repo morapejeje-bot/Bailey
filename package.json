@@ -1,15 +1,18 @@
 {
-  "name": "baileys",
+  "name": "@yanzmoralex/baileys",
   "type": "module",
-  "version": "7.0.0-rc14",
-  "description": "A WebSockets library for interacting with WhatsApp Web",
+  "version": "2.0.0",
+  "description": "Starter kits for a bot(maybe hehehe)",
   "keywords": [
     "whatsapp",
-    "automation"
+    "automation",
+    "bot",
+    "mora"
   ],
-  "homepage": "https://github.com/WhiskeySockets/Baileys/",
+  "homepage": "https://github.com/morapejeje-bot/Bailey",
   "repository": {
-    "url": "git@github.com:WhiskeySockets/Baileys.git"
+    "type": "git",
+    "url": "git+https://github.com/morapejeje-bot/Bailey.git"
   },
   "license": "MIT",
   "author": "Rajeh Taher",

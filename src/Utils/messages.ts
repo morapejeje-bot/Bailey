@@ -40,6 +40,7 @@ import {
 	getRawMediaUploadData,
 	type MediaDownloadOptions
 } from './messages-media'
+import { buildInteractiveContent } from './interactive'
 import { shouldIncludeReportingToken } from './reporting-utils'
 
 type ExtractByKey<T, K extends PropertyKey> = T extends Record<K, any> ? T : never
@@ -397,7 +398,35 @@ export const generateWAMessageContent = async (
 	options: MessageContentGenerationOptions
 ) => {
 	let m: WAMessageContent = {}
-	if (hasNonNullishProperty(message, 'text')) {
+	if (hasNonNullishProperty(message, 'interactiveButtons')) {
+		let header: proto.Message.InteractiveMessage.IHeader | undefined
+		const mediaField = (['image', 'video', 'document'] as const).find(k => !!(message as any)[k])
+		if (mediaField) {
+			const media = await prepareWAMessageMedia(
+				{
+					[mediaField]: (message as any)[mediaField],
+					mimetype: (message as any).mimetype,
+					fileName: (message as any).fileName
+				} as any,
+				options
+			)
+			header = {
+				hasMediaAttachment: true,
+				imageMessage: media.imageMessage,
+				videoMessage: media.videoMessage,
+				documentMessage: media.documentMessage
+			}
+		}
+
+		m = buildInteractiveContent({
+			header,
+			title: message.title,
+			subtitle: message.subtitle,
+			body: message.text,
+			footer: message.footer,
+			buttons: message.interactiveButtons
+		})
+	} else if (hasNonNullishProperty(message, 'text')) {
 		const extContent = { text: message.text } as WATextMessage
 
 		let urlInfo = message.linkPreview
@@ -667,6 +696,10 @@ export const generateWAMessageContent = async (
 				parentMessageKey: message.albumParentKey
 			}
 		}
+	}
+
+	if (hasNonNullishProperty(message, 'interactiveButtons') && m.interactiveMessage) {
+		m = { viewOnceMessage: { message: m } }
 	}
 
 	if (shouldIncludeReportingToken(m)) {

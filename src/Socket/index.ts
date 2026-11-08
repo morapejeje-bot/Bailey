@@ -1,6 +1,9 @@
 import { DEFAULT_CONNECTION_CONFIG } from '../Defaults'
 import type { UserFacingSocketConfig } from '../Types'
+import { printBanner } from '../Utils/banner'
 import { makeCommunitiesSocket } from './communities'
+
+printBanner()
 
 // export the last socket layer
 const makeWASocket = (config: UserFacingSocketConfig) => {
