@@ -1,7 +1,8 @@
 // Banner start-up Yanzmoralex Baileys (tampil sekali saat library di-load)
 const WIDTH = 53
 const NAME = 'Yanzmoralex baileys'
-const VERSION = '2.0.0'
+import { readFileSync as readPkg } from 'fs'
+const VERSION: string = (() => { try { return JSON.parse(readPkg(new URL('../../package.json', import.meta.url), 'utf8')).version } catch { return '?' } })()
 
 const ART: string[] = ['█   █   ███   ████    ███   █      █████  █   █', '██ ██  █   █  █   █  █   █  █      █       █ █ ', '█ █ █  █   █  ████   █████  █      ████     █  ', '█   █  █   █  █  █   █   █  █      █       █ █ ', '█   █   ███   █   █  █   █  █████  █████  █   █']
 
