@@ -6735,6 +6735,7 @@ export namespace proto {
             footer?: (proto.Message.InteractiveMessage.IFooter|null);
             contextInfo?: (proto.IContextInfo|null);
             urlTrackingMap?: (proto.IUrlTrackingMap|null);
+            bloksWidget?: (proto.Message.InteractiveMessage.IBloksWidget|null);
             shopStorefrontMessage?: (proto.Message.InteractiveMessage.IShopMessage|null);
             collectionMessage?: (proto.Message.InteractiveMessage.ICollectionMessage|null);
             nativeFlowMessage?: (proto.Message.InteractiveMessage.INativeFlowMessage|null);
@@ -6748,6 +6749,7 @@ export namespace proto {
             public footer?: (proto.Message.InteractiveMessage.IFooter|null);
             public contextInfo?: (proto.IContextInfo|null);
             public urlTrackingMap?: (proto.IUrlTrackingMap|null);
+            public bloksWidget?: (proto.Message.InteractiveMessage.IBloksWidget|null);
             public shopStorefrontMessage?: (proto.Message.InteractiveMessage.IShopMessage|null);
             public collectionMessage?: (proto.Message.InteractiveMessage.ICollectionMessage|null);
             public nativeFlowMessage?: (proto.Message.InteractiveMessage.INativeFlowMessage|null);
@@ -6763,6 +6765,28 @@ export namespace proto {
         }
 
         namespace InteractiveMessage {
+
+            interface IBloksWidget {
+                uuid?: (string|null);
+                data?: (string|null);
+                type?: (string|null);
+                fallback?: (string|null);
+            }
+
+            class BloksWidget implements IBloksWidget {
+                constructor(p?: proto.Message.InteractiveMessage.IBloksWidget);
+                public uuid?: (string|null);
+                public data?: (string|null);
+                public type?: (string|null);
+                public fallback?: (string|null);
+                public static create(properties?: proto.Message.InteractiveMessage.IBloksWidget): proto.Message.InteractiveMessage.BloksWidget;
+                public static encode(m: proto.Message.InteractiveMessage.IBloksWidget, w?: $protobuf.Writer): $protobuf.Writer;
+                public static decode(r: ($protobuf.Reader|Uint8Array), l?: number): proto.Message.InteractiveMessage.BloksWidget;
+                public static fromObject(d: { [k: string]: any }): proto.Message.InteractiveMessage.BloksWidget;
+                public static toObject(m: proto.Message.InteractiveMessage.BloksWidget, o?: $protobuf.IConversionOptions): { [k: string]: any };
+                public toJSON(): { [k: string]: any };
+                public static getTypeUrl(typeUrlPrefix?: string): string;
+            }
 
             interface IBody {
                 text?: (string|null);

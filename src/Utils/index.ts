@@ -21,3 +21,5 @@ export * from './identity-change-handler'
 export * from './stanza-ack'
 
 export * from './interactive'
+
+export * from './a2ui'
